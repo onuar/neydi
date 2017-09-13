@@ -1,12 +1,12 @@
 /build
-
 venv/
 __pycache__/
-
 /dist
-
 *.pyc
-
 *.egg-info/
 
+.idea/
+.vscode/
+
 tracing.txt
+tests_scenarios.txt
