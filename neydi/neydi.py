@@ -28,6 +28,7 @@ def command_line_runner():
     if args.version:
         print(__version__)
 
+    # todo: email regex
     if args.new_user:
         data = {"email": args.new_user}
         response = requests.post(f'{API}/new', json=data)
