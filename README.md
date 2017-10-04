@@ -9,8 +9,11 @@ a command line helper for our absent minded friends
 
 # dev 
 `source neydi/venv/bin/activate`
+
 `python setup.py install --record tracing.txt`
+
 > installs to venv
+
 `neydi --help`
 > runs from venv
 
