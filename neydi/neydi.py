@@ -41,7 +41,12 @@ def command_line_runner():
         # todo: check http response types
         # print(response.status_code)
         key_file = open("p-key.pem", 'w+')
-        key_file.write(response.json()['private-key'])
+        content = {
+            'token':response.json()['token'],
+            'key':response.json()['private-key']
+        }
+        import json
+        json.dump(content, key_file)
         key_file.close()
 
         _log('info','''Hurrey! You are registered! Now, you can start to request for some cool commands. 
