@@ -2,6 +2,8 @@ import requests
 import argparse
 from . import __version__
 
+from neydi._internals import _log
+
 API = 'http://localhost:5000/api'
 
 
@@ -11,7 +13,7 @@ def neydi(query):
 
 def get_parser():
     parser = argparse.ArgumentParser(
-        description='my sweet unforgetable commands (I forgat)')
+        description='my sweet unforgetable commands (I forgot)')
     parser.add_argument('query', metavar='QUERY', type=str,
                         nargs='*', help='shows what you want')
     parser.add_argument('-n', '--new-user',
@@ -28,15 +30,21 @@ def command_line_runner():
     if args.version:
         print(__version__)
 
-    # todo: email regex
     if args.new_user:
+        import os.path
+        if os.path.isfile('p-key.pem'):
+            _log('error', 'You are already registered!')
+            return
+
         data = {"email": args.new_user}
         response = requests.post(f'{API}/new', json=data)
         # todo: check http response types
         # print(response.status_code)
-        # print(response.json())
+        key_file = open("p-key.pem", 'w+')
+        key_file.write(response.json()['private-key'])
+        key_file.close()
 
-        print('''Hurrey! You are registered! Now, you can start to request for some cool commands. 
+        _log('info','''Hurrey! You are registered! Now, you can start to request for some cool commands. 
 
 If you don\'t know what you are able to do, you can call \'neydi -h\' first''')
         return
